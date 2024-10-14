@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
 import { HttpClientModule } from '@angular/common/http';
 import { MatExpansionModule } from '@angular/material/expansion';
-MatExpansionModule
+import { MatSnackBarModule  } from '@angular/material/snack-bar'
 @NgModule({
   declarations: [
     AppComponent
@@ -16,6 +16,7 @@ MatExpansionModule
   imports: [
     BrowserModule,
     MatExpansionModule,
+    MatSnackBarModule,
     AppRoutingModule,
     MatIconModule,
     MatButtonModule,

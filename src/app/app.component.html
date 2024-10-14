@@ -1,7 +1,7 @@
 <mat-accordion>
   <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
     <mat-expansion-panel-header>
-      <mat-panel-title style="display: flex; justify-content: center;  min-height: 4rem;">
+      <mat-panel-title style="display: flex; justify-content: left;  min-height: 4rem;">
         <img src="/assets/github_icon.png" style="height: 4rem;"/>
         <mat-icon *ngIf="userData">done_all</mat-icon>
       </mat-panel-title>
@@ -19,15 +19,16 @@
     </div>
     </mat-expansion-panel-header>
 
-    <div *ngIf="!userData" style="display: flex; width: 25rem; flex-direction: column; align-items: center; justify-content: center;">
-      <button mat-button (click)="connectToGithub()">connect</button>
-      <span>{{userData}}</span>
-      <span>Connect Sredio to Github</span>
-    </div>
+    <div style="display: flex; justify-content: center;">
+      <div *ngIf="!userData" style="display: flex; width: 25rem; flex-direction: column; align-items: center; justify-content: center;">
+        <button mat-raised-button (click)="connectToGithub()">connect</button>
+        <span>{{userData}}</span>
+        <span>Connect Sredio to Github</span>
+      </div>
 
-    <div *ngIf="userData" style="display: flex; justify-content: end;">
-      <button mat-button (click)="removeToGithub()">Remove</button>
-    </div>
-
+      <div *ngIf="userData" style="display: flex; justify-content: flex-end; align-items: end;">
+        <button mat-button (click)="removeToGithub()">Remove</button>
+      </div>
+  </div>
   </mat-expansion-panel>
 </mat-accordion>

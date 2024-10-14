@@ -1,7 +1,8 @@
-import {Component,ChangeDetectionStrategy, signal} from '@angular/core';
+import {Component,inject, signal} from '@angular/core';
 import { AuthServiceService } from './services/auth-service.service';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -18,16 +19,20 @@ export class AppComponent {
 
   }
 
+  private _snackBar = inject(MatSnackBar);
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.token = params['token'];
       if (this.token) {
         this.authService.getUserData(this.token).subscribe(data => {
-          console.log("DATA >> ", data)
           this.userData = data;
-        },(err) => this.panelOpenState.set(true));
+          this.openSnackBar(`Welcome, ${this.userData.displayName}`)
+        },(err) => {
+          this.openSnackBar(err?.error?.message || "Please connect again")
+        });
       }else{
-        this.panelOpenState.set(true)
+        this.openSnackBar(`Something Went wrong!`)
       }
     });
 
@@ -41,6 +46,7 @@ export class AppComponent {
     if (this.token) {
       this.authService.removeUser(this.token).subscribe(data => {
         this.userData = null
+        this.openSnackBar(`You are disconnecting`)
       });
     }
   }
@@ -52,6 +58,12 @@ export class AppComponent {
     }catch(_err){
       return new Date()
     }
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, '',{
+      duration: 3000
+    });
   }
 
 }
